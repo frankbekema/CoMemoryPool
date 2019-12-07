@@ -45,11 +45,11 @@ void CoMemoryPool::assignMemoryBlocks() {
 void* CoMemoryPool::alloc(unsigned int size) {
     //Check if the requested size is large enough
     if(size > blockSize) {
-        throw not_enough_memory();
+        return nullptr;
     }
     //Check if there is still an block left
     if(freeMemoryBlocks == nullptr) {
-        throw out_of_blocks();
+        return nullptr;
     }
     //Get an block
     MemoryBlock* memoryBlock = freeMemoryBlocks;
