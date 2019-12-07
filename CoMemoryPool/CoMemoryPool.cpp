@@ -42,14 +42,17 @@ void CoMemoryPool::assignMemoryBlocks() {
 //
 // Allocate data
 //
-void* CoMemoryPool::alloc(unsigned int size) {
+AllocResult CoMemoryPool::alloc(unsigned int size) {
+    AllocResult result;
+    result.success = false;
+    result.address = nullptr;
     //Check if the requested size is large enough
     if(size > blockSize) {
-        return nullptr;
+        return result;
     }
     //Check if there is still an block left
     if(freeMemoryBlocks == nullptr) {
-        return nullptr;
+        return result;
     }
     //Get an block
     MemoryBlock* memoryBlock = freeMemoryBlocks;
@@ -69,13 +72,15 @@ void* CoMemoryPool::alloc(unsigned int size) {
         usedMemoryBlocks->prev = memoryBlock;
     }
     usedMemoryBlocks = memoryBlock;
-    return (void*)((char*)memoryBlock + sizeof(MemoryBlock));
+    result.address = (void*)((char*)memoryBlock + sizeof(MemoryBlock));
+    result.success = true;
+    return result;
 }
 
 //
 // Deallocate data
 //
-void CoMemoryPool::free(void* address) {
+bool CoMemoryPool::free(void* address) {
     MemoryBlock* block = (MemoryBlock*)((char*)address - sizeof(MemoryBlock));
     //Check if the address is inside the block
     if((int*)address + blockSize > (int*)memoryPool && (int*)address + blockSize < (int*)memoryPool + memorySize) {
@@ -104,5 +109,8 @@ void CoMemoryPool::free(void* address) {
         block->next = freeMemoryBlocks;
         //Set the free memoryBlock to this block
         freeMemoryBlocks = block;
+        return true;
+    } else {
+        return false;
     }
 }

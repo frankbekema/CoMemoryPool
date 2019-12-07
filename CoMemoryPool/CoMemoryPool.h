@@ -1,6 +1,11 @@
 #ifndef CO_MEMORY_H
 #define CO_MEMORY_H
 
+struct AllocResult {
+    void* address;
+    bool success;
+};
+
 class CoMemoryPool {
 private:
     //Struct
@@ -25,8 +30,8 @@ public:
     ~CoMemoryPool();
 
     //Methods
-    void* alloc(unsigned int size);
-    void free(void* address);
+    AllocResult alloc(unsigned int size);
+    bool free(void* address);
 };
 
 #endif
