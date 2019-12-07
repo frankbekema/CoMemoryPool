@@ -16,7 +16,7 @@ To use this library for arduino copy the "CoMemoryPool" folder to your Arduino l
 ```C
 #include <iostream>
 
-#include "CoMemoryPool.hpp"
+#include "CoMemoryPool.h"
 
 //Make a pool with 4 blocks of 256 bytes
 CoMemoryPool memory(1024, 4);
