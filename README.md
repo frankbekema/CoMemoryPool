@@ -1,8 +1,8 @@
 # CoMemoryPool
-A memory pool with support for c++ and the Arduino  IDE
+A memory pool with support for c++ and the Arduino IDE
 
 ## Usage
-This sections describes how to use this library
+This sections describes how to use the library
 
 ### C++
 To use this library with C++ you need to copy all the files in the CoMemoryPool to your C++ working directory. From there on you should be able to include the library by including "CoMemoryPool.h"
